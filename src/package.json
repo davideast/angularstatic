@@ -1,18 +1,14 @@
 {
   "name": "angularstatic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple way to build static templates with Angular",
   "main": "index.js",
-  "scripts": {
-    "test": "node_modules/.bin/ts-node src/test/test.ts",
-    "build": "rm -rf dist && ./node_modules/.bin/tsc && cp src/package.json dist/packages-dist && cp README.md dist/packages-dist"
-  },
   "keywords": [
     "angular"
   ],
   "author": "David East",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -22,11 +18,8 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/platform-server": "^4.0.0",
-    "@angular/router": "^4.0.0",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.2",
-    "ts-node": "^3.2.0",
-    "typescript": "^2.5.3",
     "zone.js": "^0.8.12"
   }
 }
