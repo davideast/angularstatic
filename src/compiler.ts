@@ -3,21 +3,21 @@ import { JitCompiler, COMPILER_PROVIDERS } from '@angular/compiler';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule } from '@angular/platform-server';
 
-const CONTEXT = new InjectionToken<Object>('CONTEXT');
+export const CONTEXT = new InjectionToken<Object>('CONTEXT');
 
 /**
  * Create the root component for the static template
  * @param template
  */
 function componentFromTemplate(template: string): any {
-   @Component({ selector: 'ng-static', template })
-   class RootStatic {
-      constructor( @Inject(CONTEXT) context: Object) {
-         Object.keys(context).forEach(key => this[key] = context[key]);
-      }
-   }
+  @Component({ selector: 'ng-static', template })
+  class RootStatic {
+    constructor( @Inject(CONTEXT) context: Object) {
+      Object.keys(context).forEach(key => this[key] = context[key]);
+    }
+  }
 
-   return RootStatic;
+  return RootStatic;
 }
 
 /**
@@ -25,10 +25,30 @@ function componentFromTemplate(template: string): any {
  * @param context
  */
 export function provideContext(context: Object): Provider[] {
-   return [{
-      provide: CONTEXT,
-      useValue: context
-   }];
+  return [{
+    provide: CONTEXT,
+    useValue: context
+  }];
+}
+
+
+export function moduleFromTemplate(template: string, modules: any[] = [], appId = 'angularstatic') {
+  const Cmp = componentFromTemplate(template);
+  @NgModule({
+    imports: [
+      BrowserModule.withServerTransition({ appId }),
+      ServerModule,
+      ...modules,
+    ],
+    bootstrap: [
+      Cmp,
+    ],
+    declarations: [
+      Cmp,
+    ],
+  })
+  class StaticModule { }
+  return StaticModule;
 }
 
 /**
@@ -38,21 +58,12 @@ export function provideContext(context: Object): Provider[] {
  * @param appId 
  * @param compiler 
  */
-export function moduleFromTemplate(template: string, modules: any[] = [], appId = "angularstatic", compiler: JitCompiler): NgModuleFactory<any> {
-   const Cmp = componentFromTemplate(template);
-   @NgModule({
-      imports: [
-         BrowserModule.withServerTransition({ appId }),
-         ServerModule,
-         ...modules,
-      ],
-      bootstrap: [
-         Cmp,
-      ],
-      declarations: [
-         Cmp,
-      ],
-   })
-   class StaticModule { }
-   return compiler.compileModuleSync(StaticModule);
+export async function moduleFactoryFromTemplate(template: string, modules: any[] = [], appId = "angularstatic", compiler: JitCompiler): Promise<NgModuleFactory<any>> {
+  const StaticModule = moduleFromTemplate(template, modules, appId);
+  return await compiler.compileModuleAsync(StaticModule);
+}
+
+export function moduleFactoryFromTemplateSync(template: string, modules: any[] = [], appId = "angularstatic", compiler: JitCompiler): NgModuleFactory<any> {
+  const StaticModule = moduleFromTemplate(template, modules, appId);
+  return compiler.compileModuleSync(StaticModule);
 }

@@ -1,11 +1,11 @@
 
-export const createDocument = (title = '') => `
+export const createDocument = (title = '', tag = 'ng-static') => `
 <!doctype html>
 <html>
   <head>
     <title>${title}</title>
   </head>
   <body>
-    <ng-static></ng-static>
+    <${tag}></${tag}>
   </body>
 </html>`;

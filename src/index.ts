@@ -1,16 +1,15 @@
-import { ReflectiveInjector } from '@angular/core';
+import { ReflectiveInjector, NgModuleFactory, Type } from '@angular/core';
 import { JitCompiler, COMPILER_PROVIDERS } from '@angular/compiler';
 import { renderModuleFactory, PlatformConfig } from '@angular/platform-server';
-import { moduleFromTemplate, provideContext } from './compiler';
-import { createDocument } from './document';
+import { moduleFactoryFromTemplate, moduleFactoryFromTemplateSync, provideContext, CONTEXT } from './compiler';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
 
-export interface Config {
-   title?: string;
-   url: string;
-   modules?: any[];
-   appId?: string;
+export interface StaticConfig {
+  document?: string;
+  url: string;
+  modules?: any[];
+  appId?: string;
 }
 
 /**
@@ -18,18 +17,52 @@ export interface Config {
  */
 const compiler: JitCompiler = ReflectiveInjector.resolveAndCreate(COMPILER_PROVIDERS).get(JitCompiler);
 
-export function renderTemplate(template: string, config: Config): (context: Object) => Promise<string> {
-   const {modules, appId, title} = config;
-   const document = createDocument(title);
-   const factory = moduleFromTemplate(template, modules, appId, compiler);
-   return (context: Object) => renderModuleFactory(factory, {
+export async function renderModule<T>(module: Type<T>, config: StaticConfig) {
+  let { appId, document } = config;
+  const factory = await compiler.compileModuleAsync(module);
+  return function templateFn<R>(context: R) {
+    return renderModuleFactory(factory, {
       document, url: '/', extraProviders: [
-         provideContext(context),
+        provideContext(context)
       ]
-   });
+    });
+  }
 }
 
-export function renderModule(topModule: any, config: PlatformConfig): Promise<string> {
-   const factory = compiler.compileModuleSync(topModule);
-   return renderModuleFactory(factory, config);
+export function renderModuleSync<T>(module: Type<T>, config: StaticConfig) {
+  let { appId, document } = config;
+  const factory = compiler.compileModuleSync(module);
+  return function templateFn<R>(context: R) {
+    return renderModuleFactory(factory, {
+      document, url: '/', extraProviders: [
+        provideContext(context)
+      ]
+    });
+  }
 }
+
+export function renderTemplateSync(template: string, config: StaticConfig): (context: Object) => Promise<string> {
+  const { modules, appId, document } = config;
+  const factory = moduleFactoryFromTemplateSync(template, modules, appId, compiler);
+  return function templateFn<R>(context: R) {
+    return renderModuleFactory(factory, {
+      document, url: '/', extraProviders: [
+        provideContext(context)
+      ]
+    });
+  }
+}
+
+export async function renderTemplate(template: string, config: StaticConfig) {
+  const { modules, appId, document } = config;
+  const factory = await moduleFactoryFromTemplate(template, modules, appId, compiler);
+  return function templateFn<R>(context: R) {
+    return renderModuleFactory(factory, {
+      document, url: '/', extraProviders: [
+        provideContext(context)
+      ]
+    });
+  }
+}
+
+export { CONTEXT };

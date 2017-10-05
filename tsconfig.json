@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "target": "es5",
     "module": "commonjs",
-    "strict": true,
-    "outDir": "dist",
-    "noImplicitAny": false
-  }
+    "target": "es5",
+    "moduleResolution": "node",
+    "outDir": "dist/packages-dist",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }
