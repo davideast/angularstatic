@@ -32,7 +32,7 @@ export function provideContext(context: Object): Provider[] {
 }
 
 
-export function moduleFromTemplate(template: string, modules: any[] = [], appId = 'angularstatic') {
+function moduleFromTemplate(template: string, modules: any[] = [], appId = 'angularstatic') {
   const Cmp = componentFromTemplate(template);
   @NgModule({
     imports: [
