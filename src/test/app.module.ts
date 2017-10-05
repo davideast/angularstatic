@@ -1,19 +1,7 @@
 import { Component, NgModule, Input, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule } from '@angular/platform-server';
-import { CONTEXT } from '../';
-
-@Component({
-  selector: 'app-root',
-  template: `
-    {{ context | json }}
-    <app-hi [name]="context.name"></app-hi>
-  `
-})
-export class AppComponent { 
-  constructor( @Inject(CONTEXT) public context: { name: string } ) { }
-}
+import { STATIC_CONTEXT } from '../';
 
 @Component({
   selector: 'app-hi',
@@ -23,6 +11,17 @@ export class AppComponent {
 })
 export class HiComponent {
   @Input() name: string;
+}
+
+@Component({
+  selector: 'app-root',
+  template: `
+    {{ context | json }}
+    <app-hi [name]="context.name"></app-hi>
+  `
+})
+export class AppComponent { 
+  constructor( @Inject(STATIC_CONTEXT) public context: { name: string } ) { }
 }
 
 @NgModule({

@@ -3,7 +3,7 @@ import { JitCompiler, COMPILER_PROVIDERS } from '@angular/compiler';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule } from '@angular/platform-server';
 
-export const CONTEXT = new InjectionToken<Object>('CONTEXT');
+export const STATIC_CONTEXT = new InjectionToken<Object>('CONTEXT');
 
 /**
  * Create the root component for the static template
@@ -12,7 +12,7 @@ export const CONTEXT = new InjectionToken<Object>('CONTEXT');
 function componentFromTemplate(template: string): any {
   @Component({ selector: 'ng-static', template })
   class RootStatic {
-    constructor( @Inject(CONTEXT) context: Object) {
+    constructor( @Inject(STATIC_CONTEXT) context: Object) {
       Object.keys(context).forEach(key => this[key] = context[key]);
     }
   }
@@ -26,7 +26,7 @@ function componentFromTemplate(template: string): any {
  */
 export function provideContext(context: Object): Provider[] {
   return [{
-    provide: CONTEXT,
+    provide: STATIC_CONTEXT,
     useValue: context
   }];
 }
