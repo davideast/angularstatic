@@ -15,12 +15,12 @@ Status: Infancy
 ## Example usage
 
 ```ts
-import { renderModule, StaticConfig } from 'angularstatic';
+import { renderModule, StaticModuleConfig } from 'angularstatic';
 import { AppModule } from './app.module';
 
 const config = { url, document, modules, appId };
 
-async function render(module, config: StaticConfig) {
+async function render(module, config: StaticModuleConfig) {
   const { document, url } = config;
   const templateFn = await renderModule(AppModule, { document, url: '/' });
   // pass in data for your app at a top-level
