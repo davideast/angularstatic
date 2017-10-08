@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "commonjs",
     "target": "es5",
     "moduleResolution": "node",
@@ -11,9 +12,13 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angularstatic": ["./dist/packages-dist/index.d.ts"]
+    }
   },
   "files": [
-    "src/index.ts"
+    "src/index.ts",
+    "src/index.spec.ts"
   ]
 }
