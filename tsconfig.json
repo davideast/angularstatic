@@ -14,7 +14,7 @@
       "dom"
     ],
     "paths": {
-      "angularstatic": ["./dist/packages-dist/index.d.ts"]
+      "angularstatic": ["./dist/packages-dist"]
     }
   },
   "files": [

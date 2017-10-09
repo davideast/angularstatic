@@ -10,6 +10,7 @@ export const createDocument = ({ title = '', tag = 'ng-static', headTags = [] }:
 <html>
   <head>
     <title>${title}</title>
+    <base href="/">
     ${headTags.join('')}
   </head>
   <body>
