@@ -1,6 +1,6 @@
 {
   "name": "angularstatic",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A simple way to build static templates with Angular",
   "main": "index.js",
   "scripts": {

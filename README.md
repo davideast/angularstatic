@@ -16,17 +16,24 @@ Status: Infancy
 ## Example usage
 
 ```ts
-import { renderModule, StaticModuleConfig } from 'angularstatic';
-import { AppModule } from './app.module';
 
-const config = { url, document, modules, appId };
+import { renderModule, StaticModuleConfig } from 'angularstatic';
+import { AppModule, Person } from './app.module';
 
 async function render(module, config: StaticModuleConfig) {
   const { document, url } = config;
   const templateFn = await renderModule(AppModule, { document, url: '/' });
   // pass in data for your app at a top-level
-  return await templateFn<Person>({ name: 'David' })
+  return await templateFn<Person>({ 
+    name: 'David',
+    interests: [
+      'Long walks on the beach',
+      'La Croix',
+      'Static websites'
+    ]
+  });
 }
+
 ```
 
 ## Creating an `AppModule`
@@ -40,7 +47,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule } from '@angular/platform-server';
 import { STATIC_CONTEXT } from 'angularstatic';
 
-export interface Person { name: string };
+export interface Person { name: string, interests: string[]; };
 
 @Component({
   selector: 'app-root',
@@ -68,8 +75,6 @@ export class AppModule { }
 
 ```ts
 import { renderTemplate, StaticTemplateConfig } from 'angularstatic';
-
-const config = { url, document, modules, appId };
 
 async function render(config: StaticTemplateConfig) {
   const { document, url } = config;
