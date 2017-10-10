@@ -10,6 +10,7 @@ Status: Infancy
 - **Server based** - Build Angular templates on the server. An alternative for server templating (pug, twig, ejs).
 - **Static** - No JavaScript from Angular is included.
 - **Uni-directional** - Follow a simple props down approach to render your site
+- **Simple templates** - `NgModules` are not required. You can provide an Angular template and Angular Static will create the whole page.
 
 
 ## Example usage
@@ -63,3 +64,19 @@ export class AppComponent {
 export class AppModule { }
 ```
 
+## Creating a template
+
+```ts
+import { renderTemplate, StaticTemplateConfig } from 'angularstatic';
+
+const config = { url, document, modules, appId };
+
+async function render(config: StaticTemplateConfig) {
+  const { document, url } = config;
+  const templateFn = await renderTemplate(`
+    Hi {{ name }}!
+  `, { document, url: '/' });
+  // pass in data for your app at a top-level
+  return await templateFn<Person>({ name: 'David' })
+}
+```
