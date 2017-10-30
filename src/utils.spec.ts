@@ -4,7 +4,7 @@ import { ServerModule } from '@angular/platform-server';
 import { Routes, RouterModule, ActivatedRoute, ParamMap } from '@angular/router';
 import { STATIC_CONTEXT } from './';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-hi',
@@ -63,8 +63,8 @@ export class MainComponent {
 @Component({
   selector: 'app-detail',
   template: `
-  <div>
-    {{ person$ | async }}
+  <div id="person">
+    Hi {{ person$ | async }}!
   </div>
   `
 })
@@ -77,7 +77,7 @@ export class DetailComponent implements OnInit {
 
   ngOnInit() {
     this.person$ = this.route.paramMap
-      .switchMap((params: ParamMap) => {
+      .map((params: ParamMap) => {
         const id = params.get('id');
         return this.context.people[id];
       });

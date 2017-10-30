@@ -21,12 +21,14 @@ describe('Angular Static', () => {
       assert.equal(appHi.innerHTML.trim(), 'Hi David!');
     });
 
-    // it('should render a router app', async () => {
-    //   const document = createDocument({ tag: 'app-root' });
-    //   const templateFn = await renderModule(RouterAppModule, { document, url: '/david' });
-    //   const html = await templateFn({ people: { david: 'David' }});
-    //   console.log(html);
-    // });
+    it('should render a router app', async () => {
+      const document = createDocument({ tag: 'app-root' });
+      const templateFn = await renderModule(RouterAppModule, { document, url: '/david' });
+      const html = await templateFn({ people: { david: 'David' }});
+      const dom = new JSDOM(html);
+      const personDiv = dom.window.document.querySelector('#person');
+      assert.equal(personDiv.textContent.trim(), 'Hi David!');
+    });
 
   });
 

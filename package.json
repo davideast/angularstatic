@@ -4,7 +4,7 @@
   "description": "A simple way to build static templates with Angular",
   "main": "index.js",
   "scripts": {
-    "test": "mocha dist/packages-dist/index.spec.js",
+    "test": "npm run build && mocha dist/packages-dist/index.spec.js",
     "build": "rm -rf dist && tsc && cp src/package.json dist/packages-dist && cp README.md dist/packages-dist"
   },
   "keywords": [
