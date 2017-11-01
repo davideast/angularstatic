@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run build && mocha dist/packages-dist/index.spec.js",
-    "build": "rm -rf dist && tsc && cp src/package.json dist/packages-dist && cp README.md dist/packages-dist"
+    "build": "rm -rf dist && tsc && cp src/package.json dist/packages-dist && cp README.md dist/packages-dist",
+    "pack": "npm pack dist/packages-dist"
   },
   "keywords": [
     "angular"
@@ -34,9 +35,7 @@
     "@types/jsdom": "^11.0.2",
     "jasmine": "^2.8.0",
     "jsdom": "^11.3.0",
-    "mocha": "^4.0.1",
-    "rollup": "^0.50.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sourcemaps": "^0.4.2"
-  }
+    "mocha": "^4.0.1"
+  },
+  "repository": "https://github.com/davideast/angularstatic.git"
 }
