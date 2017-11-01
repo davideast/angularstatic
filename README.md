@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Angular Static</h1>
+  <img height="75px" width="411px" src="https://raw.githubusercontent.com/davideast/angularstatic/master/logos/angularstatic-logo.png">
   <p align="center">A simple way to build static templates with Angular</p>
 </p>
 
