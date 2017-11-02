@@ -1,0 +1,36 @@
+{
+  "config": {
+    "david": {
+      "head": {
+        "title": "Angular Static",
+        "tags": [
+          "<link rel=\"stylesheet\" href=\"/style.css\">"
+        ]
+      },
+      "data": {
+        "name": "Hello",
+        "items": [
+          "one",
+          "two",
+          "three"
+        ]
+      }
+    },
+    "shan": {
+      "head": {
+        "title": "Angular Static",
+        "tags": [
+          "<link rel=\"stylesheet\" href=\"/style.css\">"
+        ]
+      },
+      "data": {
+        "name": "woah",
+        "items": [
+          "four",
+          "five",
+          "six"
+        ]
+      }
+    }
+  }
+}
